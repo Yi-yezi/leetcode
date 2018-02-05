@@ -1,0 +1,228 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simple API",
+    "description": "A simple API to learn how to write OpenAPI Specification"
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "localhost",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "session",
+      "description": "与用户登陆相关"
+    },
+    {
+      "name": "user"
+    }
+  ],
+  "paths": {
+    "/session": {
+      "post": {
+        "tags": [
+          "session"
+        ],
+        "summary": "登入",
+        "description": "创建会话，session存入服务器，同时服务器返回token以及用户信息",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "登陆用户的用户名与密码",
+            "schema": {
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/responses/defaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "session"
+        ],
+        "summary": "登出",
+        "description": "删除会话，服务器删除session",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "登陆用户的用户名与密码",
+            "schema": {
+              "required": [
+                "username"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "default": {
+            "$ref": "#/responses/defaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "注册",
+        "description": "注册用户",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "注册用户的用户名与密码",
+            "schema": {
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "default": {
+            "$ref": "#/responses/defaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "获取用户信息",
+        "description": "获取用户信息",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "person",
+            "in": "body",
+            "description": "用户名",
+            "schema": {
+              "required": [
+                "username"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserInfo"
+            }
+          },
+          "default": {
+            "$ref": "#/responses/defaultErrorResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "UserInfo": {
+      "properties": {
+        "username": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "responses": {
+    "defaultErrorResponse": {
+      "description": "error operation",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    }
+  }
+}
